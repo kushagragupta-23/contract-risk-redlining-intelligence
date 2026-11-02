@@ -23,17 +23,18 @@ def get_samples():
 SAMPLES = get_samples()
 
 def audit_contract(contract_text, doc_title):
-    if not contract_text or not contract_text.strip():
-        return (
-            "⚠️ **Please enter or select contract text.**",
-            "No contract text provided for audit.",
-            None
-        )
+    try:
+        if not contract_text or not contract_text.strip():
+            return (
+                "⚠️ **Please enter or select contract text.**",
+                "No contract text provided for audit.",
+                None
+            )
 
-    report = ContractRedliner.analyze_document(contract_text, title=doc_title or "Commercial Agreement Review")
+        report = ContractRedliner.analyze_document(contract_text, title=doc_title or "Commercial Agreement Review")
 
-    risk_color = "#EF4444" if report.overall_risk == "CRITICAL" else ("#F59E0B" if report.overall_risk == "HIGH" else "#10B981")
-    summary_md = f"""
+        risk_color = "#EF4444" if report.overall_risk == "CRITICAL" else ("#F59E0B" if report.overall_risk == "HIGH" else "#10B981")
+        summary_md = f"""
 ## 📜 Audit Summary: <span style='color:{risk_color}; font-weight:800;'>{report.overall_risk} RISK</span>
 - **Document ID**: `{report.contract_id}` | **Title**: `{doc_title or 'Agreement'}`
 - **Composite Exposure Score**: **{report.composite_risk_score}/100**
@@ -41,11 +42,11 @@ def audit_contract(contract_text, doc_title):
 - **Executive Finding**: {report.executive_summary}
 """
 
-    clauses_md_list = []
-    for c in report.clauses:
-        badge = f"<b style='color:{'#EF4444' if c.risk_level=='CRITICAL' else ('#F59E0B' if c.risk_level=='HIGH' else '#10B981')}'>{c.risk_level}</b>"
-        is_deviated = c.risk_level != "ACCEPTABLE"
-        diff_view = f"""
+        clauses_md_list = []
+        for c in report.clauses:
+            badge = f"<b style='color:{'#EF4444' if c.risk_level=='CRITICAL' else ('#F59E0B' if c.risk_level=='HIGH' else '#10B981')}'>{c.risk_level}</b>"
+            is_deviated = c.risk_level != "ACCEPTABLE"
+            diff_view = f"""
 > **❌ Original Clause:**  
 > ~~{c.original_text}~~  
 >  
@@ -53,7 +54,7 @@ def audit_contract(contract_text, doc_title):
 > **{c.suggested_redline}**  
 """ if is_deviated else f"> *Standard boilerplate terms compliant with company playbook.*"
 
-        clauses_md_list.append(f"""
+            clauses_md_list.append(f"""
 ### {c.section_title} [{c.category.replace('_', ' ')}] — {badge}
 **Finding**: {c.risk_reasoning}  
 {f"**Playbook Rule**: *{c.playbook_rule_violated}*" if c.playbook_rule_violated else ""}  
@@ -61,15 +62,28 @@ def audit_contract(contract_text, doc_title):
 ---
 """)
 
-    clauses_md = "\n".join(clauses_md_list)
+        clauses_md = "\n".join(clauses_md_list)
 
-    # Generate DOCX export in exports directory
-    exports_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "exports")
-    os.makedirs(exports_dir, exist_ok=True)
-    export_docx = os.path.join(exports_dir, f"{report.contract_id}_redline.docx")
-    DocxRedlineExporter.export_redline(report, export_docx)
+        # Generate DOCX export in exports directory
+        export_docx = None
+        try:
+            exports_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "exports")
+            os.makedirs(exports_dir, exist_ok=True)
+            candidate_docx = os.path.join(exports_dir, f"{report.contract_id}_redline.docx")
+            DocxRedlineExporter.export_redline(report, candidate_docx)
+            if os.path.exists(candidate_docx):
+                export_docx = candidate_docx
+        except Exception as docx_err:
+            print(f"DOCX export notice: {docx_err}")
 
-    return summary_md, clauses_md, export_docx
+        return summary_md, clauses_md, export_docx
+
+    except Exception as exc:
+        return (
+            f"⚠️ **Error during contract audit**: `{str(exc)}`",
+            f"An error occurred while analyzing the agreement clauses:\n```\n{str(exc)}\n```",
+            None
+        )
 
 def load_sample(name):
     return SAMPLES.get(name, "")
