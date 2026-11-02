@@ -1,0 +1,24 @@
+MASTER SERVICES AGREEMENT (ENTERPRISE SAAS)
+
+This Master Services Agreement ("Agreement") is made between CloudCore Technologies Inc. ("Provider") and Apex Global Enterprises ("Customer").
+
+SECTION 1: TERM AND TERMINATION
+1.1 Initial Term. This Agreement shall commence on the Effective Date and continue for a period of three (3) years.
+1.2 Termination for Convenience. Customer may terminate this Agreement or any Statement of Work at any time, with or without cause, upon fifteen (15) days prior written notice to Provider, without incurring any penalty, acceleration of fees, or termination liability.
+
+SECTION 2: LIMITATION OF LIABILITY
+2.1 Uncapped Liability. Provider's total aggregate liability arising out of or related to this Agreement, whether in contract, tort, warranty, or otherwise, shall be completely uncapped and unlimited.
+2.2 Consequential Damages. Under no circumstances shall Customer be liable to Provider for indirect, punitive, or consequential damages; however, Provider shall remain fully liable to Customer for all lost profits, loss of data, and business interruption damages resulting from any system downtime or breach of contract.
+
+SECTION 3: INDEMNIFICATION
+3.1 Vendor Indemnity Obligation. Provider shall defend, indemnify, and hold harmless Customer, its affiliates, directors, officers, and employees against any and all third-party claims, suits, liabilities, damages, and legal defense costs arising from any claim that the Software infringes any patent, copyright, or trade secret worldwide, without regard to whether Customer provides prompt written notice of such claim or permits Provider sole control of the defense.
+
+SECTION 4: INTELLECTUAL PROPERTY RIGHTS
+4.1 Ownership of Work Product. Customer shall solely and exclusively own all intellectual property rights, inventions, algorithms, custom source code, documentation, and derivative works created, developed, or delivered by Provider in connection with the Services, which shall be deemed work made for hire. Provider hereby assigns all right, title, and interest therein to Customer without reservation.
+
+SECTION 5: GOVERNING LAW AND DISPUTE RESOLUTION
+5.1 Governing Law. This Agreement shall be governed exclusively by the laws of the State of New York, without giving effect to conflicts of law principles. Any dispute arising hereunder shall be litigated exclusively in the federal or state courts located in New York County, and the parties hereby waive any right to trial by jury.
+
+SECTION 6: AUDIT RIGHTS
+6.1 Customer Audit Access. Customer or its designated independent certified public accountants shall have the right, upon twenty-four (24) hours advance notice, to inspect, audit, and review all of Provider's facilities, books, records, data security controls, and source code repositories at Provider's sole cost and expense.
+

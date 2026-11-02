@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ContractRisk AI · Enterprise Contract Intelligence & Redlining Platform</title>
+  <script>
+    (function () {
+      var saved = localStorage.getItem("theme");
+      var theme = saved || (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <style>
+    .upload-zone {
+      border: 2px dashed var(--line);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      text-align: center;
+      background: var(--bg-soft);
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 10px;
+    }
+    .upload-zone:hover, .upload-zone.dragover {
+      border-color: var(--blue);
+      background: rgba(47, 111, 235, 0.05);
+    }
+    .playbook-badge {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--green);
+      background: rgba(18, 148, 106, 0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .custom-rule-box {
+      background: var(--bg-soft);
+      border: 1px solid var(--line);
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- Topbar Navigation -->
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-logo">CR</div>
+        <div class="brand-text">
+          <h1>ContractRisk AI · LegalTech Platform</h1>
+          <p>Multi-profile playbook auditing · Dynamic legal rules scraping (BeautifulSoup4) · Automated DOCX Redlining</p>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="scrape-status" id="scrapeStatus">
+          <span class="dot"></span><span id="scrapeStatusText">Playbook Active</span>
+        </div>
+        <button class="btn ghost" id="scrapeLegalRulesBtn" title="Run BeautifulSoup4 web scraper to update Playbook from legal gazettes">
+          ⟳ Scrape Legal Rules (BS4)
+        </button>
+        <button class="btn ghost theme-toggle" id="themeToggle" title="Toggle dark / light theme">
+          <span id="themeIcon">🌙</span>
+        </button>
+        <a href="/docs" target="_blank" class="btn ghost">API Docs</a>
+        <button class="btn primary" id="runAuditBtn">⚡ Audit &amp; Redline Contract</button>
+      </div>
+    </header>
+    <div class="beam-rule"></div>
+
+    <!-- Live KPI Stats Strip -->
+    <section class="stats-strip">
+      <div class="stat-cell">
+        <span class="stat-lbl">Active Playbook Profile</span>
+        <strong class="stat-val" id="kpiActiveProfile" style="color: var(--blue);">Vendor Balanced v2.6</strong>
+        <span class="stat-sub" id="kpiProfileSub">Standard Commercial SaaS Guardrails</span>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-lbl">Liability Protection</span>
+        <strong class="stat-val" style="color: var(--green);">12-Month Cap</strong>
+        <span class="stat-sub">Mutual Indirect Damage Waiver</span>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-lbl">Online Legal Scraper</span>
+        <strong class="stat-val" id="kpiRulesCount" style="color: var(--ey-yellow-deep);">BS4 Monitored</strong>
+        <span class="stat-sub">FTC, Delaware DGCL, EU AI Act</span>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-lbl">Redline Generation</span>
+        <strong class="stat-val" style="color: var(--orange);">Automated DOCX</strong>
+        <span class="stat-sub">Word Strike-through &amp; Comments</span>
+      </div>
+    </section>
+
+    <!-- Main Layout Grid -->
+    <main class="layout">
+      <!-- Left Sidebar: Playbook Posture & Custom Rules -->
+      <aside class="sidebar">
+        <!-- Negotiating Posture Selector -->
+        <div class="panel">
+          <div class="panel-title">Negotiating Posture / Rule Set</div>
+          <p style="font-size: 11.5px; color: var(--text-dim); margin-bottom: 8px;">
+            Switch between different commercial playbooks depending on your party role:
+          </p>
+          <div class="form-group">
+            <select id="playbookProfileSelect" style="width: 100%; font-weight: 600;">
+              <option value="vendor_balanced" selected>Standard Vendor SaaS (Balanced v2.6)</option>
+              <option value="buyer_aggressive">Enterprise Customer / Buyer Defensive</option>
+              <option value="healthcare_regulated">Healthcare &amp; Regulated Data (HIPAA/DPA)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Contract Upload Zone -->
+        <div class="panel">
+          <div class="panel-title">Upload Custom Contract</div>
+          <p style="font-size: 11.5px; color: var(--text-dim); margin-bottom: 8px;">
+            Upload your own agreement (.docx, .pdf, .txt) to execute automated redlining:
+          </p>
+          <div class="upload-zone" id="contractUploadZone">
+            <div style="font-size: 24px; margin-bottom: 4px;">📁</div>
+            <strong style="font-size: 12.5px;">Click to Upload or Drag &amp; Drop</strong>
+            <p style="font-size: 11px; color: var(--text-dim); margin-top: 2px;">Supports Word .DOCX, PDF, or Plain Text</p>
+            <input type="file" id="contractFileInput" accept=".docx,.pdf,.txt" style="display: none;" />
+          </div>
+        </div>
+
+        <!-- Active Scraped Playbook Policies -->
+        <div class="panel">
+          <div class="panel-head-flex" style="margin-bottom: 8px;">
+            <div class="panel-title" style="margin-bottom: 0;">Enforced Playbook Rules</div>
+            <span class="playbook-badge" id="playbookBadge">BS4 Active</span>
+          </div>
+          <div id="playbookRulesList" style="display: flex; flex-direction: column; gap: 8px;">
+            <!-- Populated dynamically by app.js -->
+          </div>
+        </div>
+
+        <!-- Custom Rule Appender -->
+        <div class="panel">
+          <div class="panel-title">Add / Update Custom Rule</div>
+          <p style="font-size: 11px; color: var(--text-dim); margin-bottom: 8px;">
+            Customize specific clause guardrails in the active playbook:
+          </p>
+          <div class="form-group" style="margin-bottom: 6px;">
+            <input type="text" id="customRuleDomain" placeholder="Domain (e.g. DATA_PROTECTION)" style="font-size: 11.5px;" />
+          </div>
+          <div class="form-group" style="margin-bottom: 6px;">
+            <input type="text" id="customRuleCriteria" placeholder="Required Policy Criteria..." style="font-size: 11.5px;" />
+          </div>
+          <div class="form-group" style="margin-bottom: 8px;">
+            <textarea id="customRuleRedline" placeholder="Fallback Redline Language..." style="font-size: 11.5px; min-height: 60px;"></textarea>
+          </div>
+          <button class="btn pill" id="saveCustomRuleBtn" style="width: 100%;">+ Save Rule to Playbook</button>
+        </div>
+
+        <!-- Audit Metrics Sidebar Panel -->
+        <div class="panel" id="metricsPanel" style="display: none;">
+          <div class="panel-title">Contract Audit Metrics</div>
+          <div class="kpi-row">
+            <span>Composite Risk:</span>
+            <strong id="sideRiskRating" style="color: var(--red);">CRITICAL</strong>
+          </div>
+          <div class="kpi-row">
+            <span>Exposure Score:</span>
+            <strong id="sideScore">0/100</strong>
+          </div>
+          <div class="kpi-row">
+            <span>Clauses Audited:</span>
+            <strong id="sideClauseCount">0</strong>
+          </div>
+          <div class="kpi-row">
+            <span>Vulnerabilities Flagged:</span>
+            <strong id="sideRiskCount" style="color: var(--orange);">0</strong>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Center Feed Column -->
+      <section class="feed-col">
+        <!-- Input & Search Toolbar -->
+        <div class="toolbar">
+          <div class="toolbar-left">
+            <span class="tb-lbl">Sample Agreement:</span>
+            <select id="sampleSelect" class="pill-select">
+              <option value="">-- Choose Sample Agreement --</option>
+            </select>
+          </div>
+          <div class="toolbar-actions">
+            <button class="btn pill" id="exportDocxBtn" style="display: none; background: var(--ey-yellow); color: #000; font-weight: 700;">
+              📥 Download Word Redline (.docx)
+            </button>
+            <a href="/docs" target="_blank" class="btn pill">Swagger OpenAPI</a>
+          </div>
+        </div>
+
+        <!-- Input Editor Box -->
+        <div class="panel editor-panel">
+          <div class="panel-head-flex">
+            <span class="ph-title">Commercial Agreement Source Text</span>
+            <span class="badge" id="contractStatusBadge">Ready for analysis</span>
+          </div>
+          <textarea id="contractInput" placeholder="Paste commercial contract text or select a sample agreement above..."></textarea>
+        </div>
+
+        <!-- Redline Output Section -->
+        <div class="panel audit-panel" id="auditOutputContainer">
+          <div class="empty-state">
+            <div class="empty-icon">⚖️</div>
+            <h3>Contract Intelligence Ready</h3>
+            <p>Select a sample contract above or upload your own <b>.docx / .pdf</b> file, then click <b>"⚡ Audit &amp; Redline Contract"</b>.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

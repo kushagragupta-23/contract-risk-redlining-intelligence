@@ -1,0 +1,13 @@
+STRATEGIC AI TECHNOLOGY TRANSFER & IP LICENSING AGREEMENT
+
+BETWEEN: Apex Frontier Labs ("Licensor") and Global Cognitive Systems Inc. ("Licensee")
+
+SECTION 1: WORLDWIDE NON-COMPETE COVENANT
+1.1 Non-Compete Restriction. Licensor agrees that during the term of this Agreement and for a period of three (3) years following termination or expiration hereof, Licensor shall not, directly or indirectly, anywhere in the world, design, develop, train, license, or commercialize any foundation large language models, multimodal neural networks, or generative artificial intelligence systems that compete with Licensee's products.
+
+SECTION 2: ASSIGNMENT OF ALL PROPRIETARY DEVELOPMENTS
+2.1 Derivative Work Product. Licensee shall be the sole and exclusive owner of all rights, title, and interest in and to any and all derivative works, model fine-tunings, weights, hyperparameters, architectures, and intellectual property developed by Licensor in connection with this Agreement, without obligation to pay additional royalties.
+
+SECTION 3: GOVERNING LAW AND ARBITRATION
+3.1 London Arbitration. This Agreement shall be governed by English law. Any dispute, controversy, or claim shall be referred to and finally resolved by arbitration administered by the London Court of International Arbitration (LCIA) under the LCIA Rules, which rules are deemed to be incorporated by reference into this clause. The seat of arbitration shall be London, England.
+

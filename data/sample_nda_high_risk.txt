@@ -1,0 +1,17 @@
+MUTUAL NON-DISCLOSURE AND PROPRIETARY RIGHTS AGREEMENT
+
+1. Confidential Information
+Each party agrees that all technical, financial, and business information disclosed by either party shall be treated as confidential information.
+
+2. Limitation of Liability
+Notwithstanding anything to the contrary, in no event shall liability be capped for any breach of confidentiality or intellectual property under this Agreement, and Vendor shall have unlimited liability for all direct and indirect damages.
+
+3. Intellectual Property Assignment
+All intellectual property developed by either party shall immediately become sole property of client including any background IP and preexisting materials.
+
+4. Termination and Survival
+Client may terminate immediately without notice at sole discretion. The obligations of confidentiality shall survive perpetually.
+
+5. Governing Law and Venue
+This Agreement shall be governed exclusively by the courts of New York with foreign jurisdiction with no arbitration.
+

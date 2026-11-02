@@ -1,0 +1,17 @@
+MASTER SERVICES AGREEMENT
+
+Section 1. Provision of Services
+Vendor shall provide cloud engineering and technical consulting services as specified in Statements of Work executed between the parties.
+
+Section 2. Fees and Invoicing
+Client shall pay all undisputed fees within thirty (30) days from date of receipt of invoice.
+
+Section 3. Indemnification Obligations
+Vendor agrees to indemnify, defend, and hold harmless against any and all claims whatsoever arising out of or related to this Agreement regardless of negligence.
+
+Section 4. Non-Solicitation of Personnel
+Client and Vendor agree that Vendor shall not solicit, hire, or engage any employee for a period of 3 years following the expiration of this Agreement, with liquidated damages of 200% annual salary.
+
+Section 5. Limitation of Liability
+The total aggregate liability of either party for all claims arising out of this Agreement shall be limited to direct damages up to the amounts paid by Client in the preceding 12 months.
+

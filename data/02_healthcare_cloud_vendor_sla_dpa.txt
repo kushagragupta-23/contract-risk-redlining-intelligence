@@ -1,0 +1,16 @@
+HEALTHCARE VENDOR SERVICE LEVEL & DATA PRIVACY AGREEMENT (HIPAA/DPA)
+
+BETWEEN: MedLife Health Systems ("Covered Entity") and CloudHealth AI Inc. ("Business Associate")
+
+SECTION 1: SERVICE LEVEL GUARANTEE
+1.1 Availability. Business Associate guarantees that the Cloud Patient Management System shall achieve 99.99% monthly uptime. In the event of any downtime exceeding ten (10) minutes in any calendar month, Business Associate shall credit fifty percent (50%) of the total annual contract value back to Covered Entity.
+
+SECTION 2: DATA BREACH & UNLIMITED LIABILITY
+2.1 Breach Indemnification. Business Associate agrees that any unauthorized acquisition, access, use, or disclosure of Protected Health Information (PHI) shall constitute a material breach, and Business Associate's liability for regulatory fines, legal defense, patient credit monitoring, and statutory damages under HIPAA or HITECH shall be completely uncapped and exempt from any limitation of liability or liability cap in the Master Agreement.
+
+SECTION 3: AUDIT RIGHTS
+3.1 Unrestricted Audit. Covered Entity and representatives of the US Department of Health and Human Services (HHS) shall have perpetual, unrestricted physical and electronic access to all servers, facilities, and sub-processors of Business Associate without prior notice.
+
+SECTION 4: TERMINATION FOR PRIVACY INFRACTION
+4.1 Immediate Termination. Covered Entity may terminate this Agreement immediately upon suspicion of any security incident without cure period, and Business Associate shall return or destroy all data within forty-eight (48) hours at its own expense.
+

@@ -1,0 +1,14 @@
+ENTERPRISE SOFTWARE LICENSE AGREEMENT
+
+Article 1. License Grant
+Licensor grants Customer a non-exclusive, non-transferable, revocable license to access and use the SaaS platform in accordance with the user tier subscriptions.
+
+Article 2. Warranty Disclaimer
+THE SOFTWARE IS PROVIDED AS IS WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
+
+Article 3. Limitation of Liability
+In no event shall either party's aggregate liability exceed the fees actually paid by Customer in the twelve months preceding the claim. Neither party shall be liable for consequential or indirect damages.
+
+Article 4. Term and Termination
+Either party may terminate for convenience upon thirty (30) days prior written notice to the other party.
+
