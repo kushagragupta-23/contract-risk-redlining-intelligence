@@ -1,7 +1,7 @@
 ---
 title: Contract Risk Redlining Intelligence
 emoji: 📜
-colorFrom: amber
+colorFrom: yellow
 colorTo: red
 sdk: gradio
 sdk_version: 5.20.0
