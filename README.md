@@ -1,10 +1,27 @@
+---
+title: Contract Risk Redlining Intelligence
+emoji: 📜
+colorFrom: amber
+colorTo: red
+sdk: gradio
+sdk_version: 5.20.0
+python_version: "3.10"
+app_file: app.py
+pinned: false
+license: mit
+---
+
 # 📜 ContractRisk AI — Autonomous Contract Intelligence & Automated Redlining Platform
 > **Enterprise LegalTech Solution for Contract Vulnerability Detection, CUAD 41-Taxonomy Tagging, Silent Risk Auditing, Balance Sheet Liability Exposure Calculation, and Automated DOCX Redlining.**
 
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.110+-009688.svg?style=flat&logo=fastapi)](https://fastapi.tiangolo.com)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg?style=flat&logo=python)](https://python.org)
+[![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Live%20Demo-ffd21e.svg?style=flat&logo=huggingface)](https://huggingface.co/spaces/kushagragupta1998/contract-risk-redlining-intelligence)
 [![python-docx](https://img.shields.io/badge/python--docx-1.1+-blue.svg?style=flat)](https://python-docx.readthedocs.io/)
 [![Tests Passing](https://img.shields.io/badge/pytest-19%2F19%20Passing-brightgreen.svg?style=flat&logo=pytest)](https://pytest.org)
+
+> 🚀 **Live Interactive Demo:** [huggingface.co/spaces/kushagragupta1998/contract-risk-redlining-intelligence](https://huggingface.co/spaces/kushagragupta1998/contract-risk-redlining-intelligence)
+
 [![CUAD Benchmark](https://img.shields.io/badge/CUAD-41--Taxonomy%20Aligned-indigo.svg?style=flat)](https://www.atticusprojectai.org/cuad)
 
 ---

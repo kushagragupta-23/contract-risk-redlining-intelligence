@@ -25,17 +25,17 @@ SAMPLES = get_samples()
 def audit_contract(contract_text, doc_title):
     if not contract_text or not contract_text.strip():
         return (
-            "⚠️ Please enter or select contract text.",
-            "",
+            "⚠️ **Please enter or select contract text.**",
+            "No contract text provided for audit.",
             None
         )
 
-    report = ContractRedliner.analyze_document(contract_text, title=doc_title or "Agreement Review")
+    report = ContractRedliner.analyze_document(contract_text, title=doc_title or "Commercial Agreement Review")
 
     risk_color = "#EF4444" if report.overall_risk == "CRITICAL" else ("#F59E0B" if report.overall_risk == "HIGH" else "#10B981")
     summary_md = f"""
-### 📜 Audit Summary: <span style='color:{risk_color}; font-weight:bold;'>{report.overall_risk} RISK</span>
-- **Document Reference**: `{report.contract_id}`
+## 📜 Audit Summary: <span style='color:{risk_color}; font-weight:800;'>{report.overall_risk} RISK</span>
+- **Document ID**: `{report.contract_id}` | **Title**: `{doc_title or 'Agreement'}`
 - **Composite Exposure Score**: **{report.composite_risk_score}/100**
 - **Clause Breakdown**: 🔴 {report.critical_count} Critical | 🟠 {report.high_count} High | 🟡 {report.medium_count} Medium | 🟢 {report.acceptable_count} Standard
 - **Executive Finding**: {report.executive_summary}
@@ -63,11 +63,13 @@ def audit_contract(contract_text, doc_title):
 
     clauses_md = "\n".join(clauses_md_list)
 
-    # Generate DOCX export
-    temp_docx = os.path.join(tempfile.gettempdir(), f"{report.contract_id}_redline.docx")
-    DocxRedlineExporter.export_redline(report, temp_docx)
+    # Generate DOCX export in exports directory
+    exports_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "exports")
+    os.makedirs(exports_dir, exist_ok=True)
+    export_docx = os.path.join(exports_dir, f"{report.contract_id}_redline.docx")
+    DocxRedlineExporter.export_redline(report, export_docx)
 
-    return summary_md, clauses_md, temp_docx
+    return summary_md, clauses_md, export_docx
 
 def load_sample(name):
     return SAMPLES.get(name, "")
@@ -75,37 +77,38 @@ def load_sample(name):
 with gr.Blocks(title="ContractRisk AI | Legal Redlining") as demo:
     gr.Markdown("""
     # 📜 Enterprise Contract Risk Intelligence & Automated Redlining
-    ### AI LegalTech Engine for Commercial Contract Auditing & DOCX Redlining
-    *Benchmarks agreements against corporate compliance playbooks and auto-generates Word redlines.*
+    > **AI LegalTech Engine for Commercial Contract Auditing, Silent Risk Detection & DOCX Redlining**  
+    *Author: Kushagra Gupta · [GitHub Code](https://github.com/kushagragupta-23/contract-risk-redlining-intelligence) · [Portfolio](https://kushagragupta-23.github.io)*
     """)
 
     with gr.Row():
-        with gr.Column(scale=1):
-            gr.Markdown("### ⚙️ Agreement Setup")
+        # LEFT COLUMN: CONTRACT INPUTS
+        with gr.Column(scale=5):
+            gr.Markdown("### ⚙️ 1. Agreement Configuration")
             doc_title = gr.Textbox(value="Commercial Master Services Agreement", label="Contract Document Title")
-            sample_dropdown = gr.Dropdown(choices=list(SAMPLES.keys()), label="Choose Sample Agreement", value=list(SAMPLES.keys())[0] if SAMPLES else None)
-            load_btn = gr.Button("Load Agreement Template")
+            sample_dropdown = gr.Dropdown(
+                choices=list(SAMPLES.keys()),
+                label="Choose Preloaded Contract Sample",
+                value=list(SAMPLES.keys())[0] if SAMPLES else None
+            )
 
-        with gr.Column(scale=2):
-            gr.Markdown("### 📝 Contract Text & Clauses")
+            gr.Markdown("### 📝 2. Contract Text & Clauses")
             contract_input = gr.Textbox(
                 value=list(SAMPLES.values())[0] if SAMPLES else "",
-                lines=12,
-                label="Contract Input Text"
+                lines=10,
+                label="Contract Input Text (Auto-fills from sample dropdown above)"
             )
-            audit_btn = gr.Button("⚡ Audit & Redline Contract", variant="primary")
+            audit_btn = gr.Button("⚡ Audit & Redline Contract", variant="primary", size="lg")
 
-    load_btn.click(fn=load_sample, inputs=[sample_dropdown], outputs=[contract_input])
-
-    gr.Markdown("---")
-    gr.Markdown("## 🛡️ Audit Findings & Clause-by-Clause Redlines")
-
-    with gr.Row():
-        with gr.Column(scale=1):
-            summary_output = gr.Markdown("Click 'Audit & Redline Contract' to begin legal review.")
+        # RIGHT COLUMN: REAL-TIME AUDIT & REDLINES
+        with gr.Column(scale=6):
+            gr.Markdown("### 🛡️ Executive Findings & Redlines")
+            summary_output = gr.Markdown("👉 Select an agreement and click **'⚡ Audit & Redline Contract'**.")
             docx_download = gr.File(label="📥 Download Redlined Word (.docx)")
-        with gr.Column(scale=2):
-            clauses_output = gr.Markdown()
+            with gr.Accordion("🔍 Detailed Clause-by-Clause Redlines & Playbook Violations", open=True):
+                clauses_output = gr.Markdown("Playbook redlines and risk evaluations will appear here.")
+
+    sample_dropdown.change(fn=load_sample, inputs=[sample_dropdown], outputs=[contract_input])
 
     audit_btn.click(
         fn=audit_contract,
@@ -115,4 +118,3 @@ with gr.Blocks(title="ContractRisk AI | Legal Redlining") as demo:
 
 if __name__ == "__main__":
     demo.launch(server_name="127.0.0.1", server_port=7862)
-
